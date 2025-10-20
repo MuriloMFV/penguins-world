@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conservação dos Pinguins - Penguin World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a2e46;
+            --secondary-color: #2e7d32;
+            --accent-color: #ff6b6b;
+            --light-color: #e8f5e9;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary-color);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #a8d8ff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #a8d8ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(10, 46, 70, 0.85), rgba(46, 125, 50, 0.8)), url('https://images.unsplash.com/photo-1551966775-a4ddc8df052b?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-color);
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--accent-color);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Emergency Banner */
+        .emergency-banner {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .emergency-banner h2 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+        }
+
+        /* Threats Grid */
+        .threats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .threat-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .threat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            padding: 25px 25px 0;
+        }
+
+        .threat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .card-content {
+            padding: 0 25px 25px;
+        }
+
+        .card-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .severity {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .severity.high {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .severity.medium {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .severity.critical {
+            background: #fce4ec;
+            color: #ad1457;
+        }
+
+        /* Status Section */
+        .status-section {
+            background: var(--light-color);
+            padding: 60px 0;
+            margin: 60px 0;
+        }
+
+        .species-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .status-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .status-card.critical {
+            border-left-color: #d32f2f;
+        }
+
+        .status-card.endangered {
+            border-left-color: #f57c00;
+        }
+
+        .status-card.vulnerable {
+            border-left-color: #fbc02d;
+        }
+
+        .species-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .critical-badge {
+            background: #d32f2f;
+        }
+
+        .endangered-badge {
+            background: #f57c00;
+        }
+
+        .vulnerable-badge {
+            background: #fbc02d;
+        }
+
+        /* Solutions */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .solution-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .solution-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        /* Action Section */
+        .action-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .action-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        /* Organizations */
+        .organizations {
+            padding: 60px 0;
+            background: var(--light-color);
+        }
+
+        .org-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .org-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .org-card:hover {
+            transform: scale(1.05);
+        }
+
+        .org-logo {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .threats-grid,
+            .solutions-grid,
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">PENGUIN WORLD</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#imperador">Espécies</a></li>
+                    <li><a href="cultura-pop.html">Cultura Pop</a></li>
+                    <li><a href="conservacao.html">Conservação</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Salvando Nossos Pinguins</h1>
+                <p>10 das 18 espécies de pinguins estão ameaçadas de extinção. Junte-se a nós na luta para proteger essas aves incríveis e seus habitats.</p>
+                <a href="#acao" class="btn">Tomar Ação</a>
+                <a href="#doar" class="btn btn-secondary">Doar Agora</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="emergency-banner">
+        <div class="container">
+            <h2>🚨 ESTADO DE EMERGÊNCIA 🚨</h2>
+            <p>Populações de pinguins diminuíram mais de 60% nas últimas 3 décadas</p>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="container">
+            <h2 class="section-title">Principais Ameaças</h2>
+            
+            <div class="threats-grid">
+                <!-- Ameaça 1 -->
+                <div class="threat-card">
+                    <div class="card-header">
+                        <div class="threat-icon">🌡️</div>
+                        <h3 class="card-title">Mudanças Climáticas</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-description">O aquecimento global está derretendo o gelo marinho essencial para reprodução e redução das populações de krill, principal fonte de alimento.</p>
+                        <span class="severity critical">Crítico</span>
+                    </div>
+                </div>
+
+                <!-- Ameaça 2 -->
+                <div class="threat-card">
+                    <div class="card-header">
+                        <div class="threat-icon">🎣</div>
+                        <h3 class="card-title">Pesca Predatória</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-description">Sobrepesca de krill e peixes compete diretamente com a alimentação dos pinguins, levando à fome e diminuição reprodutiva.</p>
+                        <span class="severity high">Alta</span>
+                    </div>
+                </div>
+
+                <!-- Ameaça 3 -->
+                <div class="threat-card">
+                    <div class="card-header">
+                        <div class="threat-icon">🛢️</div>
+                        <h3 class="card-title">Poluição Marinha</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-description">Vazamentos de petróleo, plásticos e poluentes químicos contaminam as águas e intoxicam os pinguins através da cadeia alimentar.</p>
+                        <span class="severity high">Alta</span>
+                    </div>
+                </div>
+
+                <!-- Ameaça 4 -->
+                <div class="threat-card">
+                    <div class="card-header">
+                        <div class="threat-icon">🏗️</div>
+                        <h3 class="card-title">Perda de Habitat</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-description">Expansão humana, turismo descontrolado e desenvolvimento costeiro destroem áreas de nidificação e reprodução.</p>
+                        <span class="severity medium">Média</span>
+                    </div>
+                </div>
+
+                <!-- Ameaça 5 -->
+                <div class="threat-card">
+                    <div class="card-header">
+                        <div class="threat-icon">🦊</div>
+                        <h3 class="card-title">Espécies Invasoras</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-description">Ratos, gatos e outras espécies introduzidas em ilhas predam ovos e filhotes, devastando colônias inteiras.</p>
+                        <span class="severity critical">Crítico</span>
+                    </div>
+                </div>
+
+                <!-- Ameaça 6 -->
+                <div class="threat-card">
+                    <div class="card-header">
+                        <div class="threat-icon">🦠</div>
+                        <h3 class="card-title">Doenças</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-description">Surtos de gripe aviária e outras doenças se espalham rapidamente em colônias densamente povoadas.</p>
+                        <span class="severity medium">Média</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-section">
+                <h2 class="section-title">Status das Espécies</h2>
+                <div class="species-status">
+                    <div class="status-card critical">
+                        <h3 class="species-name">Pinguim-de-Galápagos</h3>
+                        <span class="status-badge critical-badge">Criticamente Ameaçado</span>
+                        <p>População: ~1.200 indivíduos</p>
+                        <p>Tendência: Decrescente</p>
+                    </div>
+
+                    <div class="status-card endangered">
+                        <h3 class="species-name">Pinguim-Africano</h3>
+                        <span class="status-badge endangered-badge">Em Perigo</span>
+                        <p>População: ~50.000 indivíduos</p>
+                        <p>Tendência: Decrescente</p>
+                    </div>
+
+                    <div class="status-card vulnerable">
+                        <h3 class="species-name">Pinguim-de-Adélia</h3>
+                        <span class="status-badge vulnerable-badge">Vulnerável</span>
+                        <p>População: ~5 milhões</p>
+                        <p>Tendência: Decrescente</p>
+                    </div>
+
+                    <div class="status-card vulnerable">
+                        <h3 class="species-name">Pinguim-Imperador</h3>
+                        <span class="status-badge vulnerable-badge">Quase Ameaçado</span>
+                        <p>População: ~600.000</p>
+                        <p>Tendência: Decrescente</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Soluções e Ações</h2>
+            
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">🌊</div>
+                    <h3>Áreas Marinhas Protegidas</h3>
+                    <p>Criação e expansão de santuários marinhos para proteger habitats essenciais</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">📊</div>
+                    <h3>Monitoramento Científico</h3>
+                    <p>Pesquisa contínua e monitoramento de populações para guiar conservação</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🚫</div>
+                    <h3>Controle de Espécies Invasoras</h3>
+                    <p>Eradicação de predadores introduzidos em ilhas de nidificação</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🎣</div>
+                    <h3>Pesca Sustentável</h3>
+                    <p>Regulamentação da pesca de krill e estabelecimento de cotas sustentáveis</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">📢</div>
+                    <h3>Educação e Conscientização</h3>
+                    <p>Programas educacionais para comunidades locais e turistas</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🌍</div>
+                    <h3>Políticas Climáticas</h3>
+                    <p>Advocacy por políticas que combatam as mudanças climáticas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="action-section" id="acao">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Como Você Pode Ajudar</h2>
+            
+            <div class="action-grid">
+                <div class="action-card">
+                    <div class="action-number">1</div>
+                    <h3>Reduza Sua Pegada de Carbono</h3>
+                    <p>Use transporte público, economize energia e apoie energias renováveis</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-number">2</div>
+                    <h3>Escolha Frutos do Mar Sustentáveis</h3>
+                    <p>Verifique certificações e evite espécies sobre-exploradas</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-number">3</div>
+                    <h3>Reduza o Uso de Plásticos</h3>
+                    <p>Use alternativas reutilizáveis e participe de limpezas de praia</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-number">4</div>
+                    <h3>Apoie Organizações</h3>
+                    <p>Doe para instituições dedicadas à conservação de pinguins</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-number">5</div>
+                    <h3>Espalhe Conscientização</h3>
+                    <p>Compartilhe informações e eduque outros sobre a causa</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-number">6</div>
+                    <h3>Turismo Responsável</h3>
+                    <p>Escolha operadores que seguem diretrizes de observação responsável</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 50px;">
+                <a href="#doar" class="btn" style="background: white; color: var(--primary-color);">Doar para a Causa</a>
+                <a href="#" class="btn btn-secondary">Tornar-se Voluntário</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="organizations">
+        <div class="container">
+            <h2 class="section-title">Organizações Parceiras</h2>
+            
+            <div class="org-grid">
+                <div class="org-card">
+                    <div class="org-logo">🐧</div>
+                    <h3>Penguin Foundation</h3>
+                    <p>Proteção de habitats</p>
+                </div>
+
+                <div class="org-card">
+                    <div class="org-logo">🌎</div>
+                    <h3>WWF</h3>
+                    <p>Conservação global</p>
+                </div>
+
+                <div class="org-card">
+                    <div class="org-logo">🔬</div>
+                    <h3>BirdLife International</h3>
+                    <p>Pesquisa e monitoramento</p>
+                </div>
+
+                <div class="org-card">
+                    <div class="org-logo">🏔️</div>
+                    <h3>Antarctic and Southern Ocean Coalition</h3>
+                    <p>Proteção da Antártida</p>
+                </div>
+
+                <div class="org-card">
+                    <div class="org-logo">💙</div>
+                    <h3>Ocean Conservancy</h3>
+                    <p>Proteção marinha</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="doar" style="background: white; padding: 60px 0; text-align: center;">
+        <div class="container">
+            <h2 class="section-title">Faça uma Doação</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Sua doação ajuda a financiar pesquisas críticas, programas de conservação e esforços de educação para salvar os pinguins da extinção.
+            </p>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px;">
+                <div style="background: var(--light-color); padding: 20px; border-radius: 10px; min-width: 150px;">
+                    <h3 style="color: var(--secondary-color);">R$ 50</h3>
+                    <p>Alimenta 1 pinguin por 1 mês</p>
+                </div>
+                <div style="background: var(--light-color); padding: 20px; border-radius: 10px; min-width: 150px;">
+                    <h3 style="color: var(--secondary-color);">R$ 100</h3>
+                    <p>Equipamento de monitoramento</p>
+                </div>
+                <div style="background: var(--light-color); padding: 20px; border-radius: 10px; min-width: 150px;">
+                    <h3 style="color: var(--secondary-color);">R$ 250</h3>
+                    <p>Proteção de 1 ninho</p>
+                </div>
+            </div>
+
+            <a href="#" class="btn" style="font-size: 1.2rem; padding: 15px 30px;">Doar Agora</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">PENGUIN WORLD</div>
+                    <p>Comprometidos com a conservação dos pinguins e seus habitats através de pesquisa, educação e ação.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Navegação</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#imperador">Espécies</a></li>
+                        <li><a href="cultura-pop.html">Cultura Pop</a></li>
+                        <li><a href="conservacao.html">Conservação</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Envolva-se</h3>
+                    <ul>
+                        <li><a href="#doar">Doações</a></li>
+                        <li><a href="#">Voluntariado</a></li>
+                        <li><a href="#">Campanhas</a></li>
+                        <li><a href="#">Eventos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Parcerias</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="#">Termos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2023 Penguin World. Todos os direitos reservados. | Juntos na conservação dos pinguins
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

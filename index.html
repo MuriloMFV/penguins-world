@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo dos Pinguins - Uma Jornada pelos Habitats Gelados</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Imagens de fundo para cada seção -->
+    <div class="bg-image active" id="bg-hero" style="background-image: url('https://mariamochileira.com.br/wp-content/uploads/2020/08/7901_photos-gold-harbour_42_-edited.jpg?w=1024');"></div>
+    <div class="bg-image" id="bg-imperador" style="background-image: url('https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/dscn1213.webp?w=1600&h=900');"></div>
+    <div class="bg-image" id="bg-gentoo" style="background-image: url('https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2022/09/hypatia-h_dc434ef46c7f608d5cbe43f2f1c89680-h_0c70909bb47cbfab01377234e2c7ff69.jpg?w=1024');"></div>
+    <div class="bg-image" id="bg-adelia" style="background-image: url('http://www.velle.tur.br/wp-content/uploads/2019/08/Scenic-Eclipse-South-Georgia-Gold-Harbour-RogerPimenta-6.jpg');"></div>
+    <div class="bg-image" id="bg-real" style="background-image: url('https://www.tangol.com/blog/Fotos/Galeria/ushuaia_0_202008190823450.JPG');"></div>
+    <div class="bg-image" id="bg-conservacao" style="background-image: url('https://mariamochileira.com.br/wp-content/uploads/2020/08/2_photos-saunders-island-edited.jpg');"></div>
+    
+    <div class="dynamic-bg" id="dynamicBg"></div>
+    <div class="bg-overlay"></div>
+    <div class="snow" id="snow"></div>
+
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">PENGUIN WORLD</a>
+                <ul class="nav-links">
+                    <li><a href="#imperador">Imperador</a></li>
+                    <li><a href="#gentoo">Gentoo</a></li>
+                    <li><a href="#adelia">Adélia</a></li>
+                    <li><a href="#real">Real</a></li>
+                    <li><a href="conservacao.html">Conservação</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>O Mundo Fantástico dos Pinguins</h1>
+                <p>Embarque em uma jornada pelos habitats gelados e descubra a incrível lindeza dessas aves marinhas que tem nossos corações.</p>
+                <a href="#imperador" class="btn">Explorar Espécies</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Role para explorar</span>
+            <i>↓</i>
+        </div>
+    </section>
+
+    <section class="penguin-section" id="imperador" data-bg-start="#0a2e46" data-bg-end="#1a5276" data-bg-image="bg-imperador">
+        <div class="container">
+            <div class="section-content">
+                <div class="penguin-image">
+                    <img src="src/pinguins/imperador.png" alt="Pinguim Imperador" class="penguin-img">
+                </div>
+                <div class="penguin-info">
+                    <span class="species-tag">Espécie Imperial</span>
+                    <h2>Pinguim Imperador</h2>
+                    <p>O majestoso pinguim-imperador é a maior de todas as espécies de pinguins, adaptado perfeitamente à vida na Antártida. Capazes de suportar temperaturas de -40°C, esses animais incríveis realizam uma das jornadas mais extraordinárias do reino animal para procriar.</p>
+                    <div class="habitat-info">
+                        <div class="habitat-item">
+                            <h4>Habitat</h4>
+                            <p>Antártida</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Altura</h4>
+                            <p>Até 1,2 metros</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Peso</h4>
+                            <p>Até 45 kg</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-outline">Saber Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="penguin-section" id="gentoo" data-bg-start="#1a5276" data-bg-end="#2874a6" data-bg-image="bg-gentoo">
+        <div class="container">
+            <div class="section-content">
+                <div class="penguin-info">
+                    <span class="species-tag">Espécie Ártica</span>
+                    <h2>Pinguim Gentoo</h2>
+                    <p>Reconhecível por seu bico laranja vibrante e marcação branca distintiva em sua cabeça, o pinguim-gentoo é o mais rápido debaixo d'água, atingindo velocidades de até 36 km/h. Eles constroem ninhos circulares de pedras, muitas vezes "roubando" pedras dos ninhos vizinhos.</p>
+                    <div class="habitat-info">
+                        <div class="habitat-item">
+                            <h4>Habitat</h4>
+                            <p>Ilhas Subantárticas</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Altura</h4>
+                            <p>Até 80 cm</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>População</h4>
+                            <p>~600.000 indivíduos</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-outline">Saber Mais</a>
+                </div>
+                <div class="penguin-image">
+                    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/eefb0b38-74d0-46ce-aea9-9c32d25d2024/djuwvn8-7e2ec113-5f3b-48e3-b724-045ef2e25f9a.png/v1/fit/w_375,h_414/gabriel_the_gentoo_penguin_by_superraptorm_djuwvn8-375w.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjAwIiwicGF0aCI6IlwvZlwvZWVmYjBiMzgtNzRkMC00NmNlLWFlYTktOWMzMmQyNWQyMDI0XC9kanV3dm44LTdlMmVjMTEzLTVmM2ItNDhlMy1iNzI0LTA0NWVmMmUyNWY5YS5wbmciLCJ3aWR0aCI6Ijw9NTQzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.R0mZaTpZKw-oFj8djdi2etMSYoxK8V_GvuZs9Aij96U" alt="Pinguim Gentoo" class="penguin-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="penguin-section" id="adelia" data-bg-start="#2874a6" data-bg-end="#3498db" data-bg-image="bg-adelia">
+        <div class="container">
+            <div class="section-content">
+                <div class="penguin-image">
+                    <img src="src/pinguins/adelia.png" alt="Pinguim de Adélia" class="penguin-img">
+                </div>
+                <div class="penguin-info">
+                    <span class="species-tag">Espécie Clássica</span>
+                    <h2>Pinguim de Adélia</h2>
+                    <p>Com seus olhos brancos distintivos e andar desajeitado em terra, os pinguins-de-adélia são uma das espécies mais icônicas da Antártida. Extremamente sociais, formam colônias de milhares de indivíduos e são conhecidos por seus rituais de acasalamento elaborados, incluindo a oferta de pedras como presentes.</p>
+                    <div class="habitat-info">
+                        <div class="habitat-item">
+                            <h4>Habitat</h4>
+                            <p>Costas da Antártida</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Altura</h4>
+                            <p>Até 70 cm</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>População</h4>
+                            <p>~5 milhões</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-outline">Saber Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="penguin-section" id="real" data-bg-start="#3498db" data-bg-end="#5dade2" data-bg-image="bg-real">
+        <div class="container">
+            <div class="section-content">
+                <div class="penguin-info">
+                    <span class="species-tag">Espécie Real</span>
+                    <h2>PINGUIM-DE-MAGALHÃES</h2>
+                    <p>Reconhecido pelo característico colar negro duplo no peito, o pinguim-de-magalhães habita as costas temperadas da América do Sul. Migratório por natureza, viaja milhares de quilômetros anualmente entre Argentina, Chile e Brasil. Vive em grandes colônias que podem abrigar até 200.000 casais, escavando tocas no solo para nidificar e proteger seus filhotes do calor excessivo.</p>
+                    <div class="habitat-info">
+                        <div class="habitat-item">
+                            <h4>Habitat</h4>
+                            <p>Costas da América do Sul</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Altura</h4>
+                            <p>Até 76 cm</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Expectativa de Vida</h4>
+                            <p>25 a 30 anos</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-outline">Saber Mais</a>
+                </div>
+                <div class="penguin-image">
+                    <img src="https://pngmax.com/_next/image?url=https%3A%2F%2Fpng-max.s3.ap-south-1.amazonaws.com%2Flow%2Ffe70ebb3-48e8-4f07-b466-78cff000208f.png&w=1200&q=75" alt="pinguim-de-magalhães" class="penguin-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="penguin-section" id="conservacao" data-bg-start="#5dade2" data-bg-end="#aed6f1" data-bg-image="bg-conservacao">
+        <div class="container">
+            <div class="section-content">
+                <div class="penguin-image">
+                    <img src="src/pinguins/magalhaes.png" alt="Conservação de Pinguins" class="penguin-img">
+                </div>
+                <div class="penguin-info">
+                    <span class="species-tag">Conservação</span>
+                    <h2>Protegendo os Pinguins</h2>
+                    <p>As mudanças climáticas, a pesca predatória e a poluição representam ameaças significativas para as populações de pinguins em todo o mundo. Muitas espécies estão em declínio, com algumas classificadas como vulneráveis ou em perigo de extinção. A proteção de seus habitats e a redução das emissões de carbono são essenciais para garantir sua sobrevivência.</p>
+                    <div class="habitat-info">
+                        <div class="habitat-item">
+                            <h4>Status</h4>
+                            <p>5 espécies ameaçadas</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Principal Ameaça</h4>
+                            <p>Mudanças climáticas</p>
+                        </div>
+                        <div class="habitat-item">
+                            <h4>Soluções</h4>
+                            <p>Áreas marinhas protegidas</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">Apoiar a Conservação</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-indicator">
+        <div class="indicator-dot active" data-species="Imperador" data-section="imperador"></div>
+        <div class="indicator-dot" data-species="Gentoo" data-section="gentoo"></div>
+        <div class="indicator-dot" data-species="Adélia" data-section="adelia"></div>
+        <div class="indicator-dot" data-species="Real" data-section="real"></div>
+        <div class="indicator-dot" data-species="Conservação" data-section="conservacao"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="logo">PENGUIN WORLD</a>
+                <ul class="footer-links">
+                    <li><a href="cul">Pinguins na Cultura Pop</a></li>
+                    <li><a href="#">Espécies</a></li>
+                    <li><a href="#">Habitats</a></li>
+                    <li><a href="#">Conservação</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+                <p class="copyright">&copy; 2023 Penguin World. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+     
+    
+</body>
+</html>

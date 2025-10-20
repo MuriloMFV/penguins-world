@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinguins na Cultura Pop - Penguin World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --transition-time: 0.5s;
+            --primary-color: #0a2e46;
+            --accent-color: #ff6b6b;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary-color);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #a8d8ff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #a8d8ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(10, 46, 70, 0.8), rgba(10, 46, 70, 0.9)), url('src/backgrounds/popculture.jpg') no-repeat center center/cover;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        /* Cultura Pop Grid */
+        .pop-culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .culture-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .culture-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .culture-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .card-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 45%;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -30px;
+        }
+
+        .timeline-year {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Curiosidades */
+        .curiosities {
+            background: var(--primary-color);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .curiosities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .curiosity-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .curiosity-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .curiosity-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+
+            .timeline-content::before {
+                left: -40px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">PENGUIN WORLD</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#imperador">Espécies</a></li>
+                    <li><a href="cultura-pop.html">Cultura Pop</a></li>
+                    <li><a href="index.html#conservacao">Conservação</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Pinguins na Cultura Pop</h1>
+                <p>Descubra como essas adoráveis aves conquistaram corações ao redor do mundo através do cinema, TV, games e muito mais!</p>
+                <a href="#pop-culture" class="btn">Explorar</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="container">
+            <h2 class="section-title" id="pop-culture">Ícones da Cultura Pop</h2>
+            
+            <div class="pop-culture-grid">
+                <!-- Card 1 -->
+                <div class="culture-card">
+                    <div class="card-image">
+                        <img src="https://ofuxico.com.br/wp-content/uploads/2022/04/os-pinguins-de-madagascar.jpg.webp" alt="Pinguins de Madagascar">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Pinguins de Madagascar</h3>
+                        <p class="card-description">Skipper, Kowalski, Rico e Private se tornaram ícones animados com sua própria série e filmes, mostrando pinguins como espiões habilidosos e cheios de personalidade.</p>
+                        <div class="card-meta">
+                            <span>DreamWorks</span>
+                            <span>2005-presente</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="culture-card">
+                    <div class="card-image">
+                        <img src="https://isabelaboscov.com/wp-content/uploads/2016/07/happyfeet_feat.jpg?w=1038&h=520&crop=1" alt="Happy Feet">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Happy Feet</h3>
+                        <p class="card-description">Mumble, o pinguim imperador que dança tap, conquistou o público em um filme que celebra a individualidade e a importância de ser verdadeiro consigo mesmo.</p>
+                        <div class="card-meta">
+                            <span>Warner Bros</span>
+                            <span>2006</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="culture-card">
+                    <div class="card-image">
+                        <img src="https://uploads.sempreupdate.com.br/2025/07/por-que-o-pinguim-e-o-mascote-do-linux.webp" alt="Linux Tux">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Tux - Mascote do Linux</h3>
+                        <p class="card-description">Tux é o mascote oficial do kernel Linux, criado por Larry Ewing em 1996. Se tornou um dos mascotes mais reconhecíveis no mundo da tecnologia.</p>
+                        <div class="card-meta">
+                            <span>Open Source</span>
+                            <span>1996</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="culture-card">
+                    <div class="card-image">
+                        <img src="https://mediaproxy.tvtropes.org/width/1200/https://static.tvtropes.org/pmwiki/pub/images/x0_5fb3029ce918a_2000.webp" alt="Pingu">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Pingu</h3>
+                        <p class="card-description">A série de TV suíça que cativou crianças ao redor do mundo com as aventuras do jovem pinguim Pingu e sua família na Antártida.</p>
+                        <div class="card-meta">
+                            <span>TV Suíça</span>
+                            <span>1986-2006</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="culture-card">
+                    <div class="card-image">
+                        <img src="https://pt.quizur.com/_image?href=https://img.quizur.com/f/img5c98c3a1404d65.56386977.jpg?lastEdited=1553515429&w=1024&h=1024&f=webp" alt="Club Penguin">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Club Penguin</h3>
+                        <p class="card-description">MMO que permitia aos jogadores viverem como pinguins em um mundo virtual. Foi extremamente popular entre 2005-2017.</p>
+                        <div class="card-meta">
+                            <span>Disney</span>
+                            <span>2005-2017</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="culture-card">
+                    <div class="card-image">
+                        <img src="https://www.otempo.com.br/adobe/dynamicmedia/deliver/dm-aid--3cc66798-d8a7-49e1-8f31-9b4271d8d34a/entretenimento-t--dando-onda-serie-animacao-1758827036.jpg?preferwebp=true&quality=90" alt="Surf's Up">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Surf's Up</h3>
+                        <p class="card-description">Filme de animação que segue Cody Maverick, um pinguim que sonha em se tornar um campeão de surfe, em formato de documentário.</p>
+                        <div class="card-meta">
+                            <span>Sony Pictures</span>
+                            <span>2007</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Linha do Tempo na Cultura Pop</h2>
+            
+            <div class="timeline">
+                <!-- Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1938</div>
+                        <h3>Pingüins (Porky in Wackyland)</h3>
+                        <p>Primeira aparição significativa de pinguins em animação no curta de Looney Tunes.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1964</div>
+                        <h3>Mary Poppins</h3>
+                        <p>Os pinguins dançarinos se tornam uma das cenas mais icônicas do filme clássico da Disney.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1986</div>
+                        <h3>Pingu</h3>
+                        <p>Estreia da série de TV suíça que se tornaria um fenômeno mundial.</p>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1996</div>
+                        <h3>Tux - Mascote do Linux</h3>
+                        <p>Nascimento do mascote mais famoso do mundo open source.</p>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2005</div>
+                        <h3>Madagascar & Club Penguin</h3>
+                        <p>Ano marcante com o lançamento de Madagascar e do Club Penguin.</p>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2006</div>
+                        <h3>Happy Feet</h3>
+                        <p>Filme vencedor do Oscar de Melhor Animação que popularizou pinguins dançarinos.</p>
+                    </div>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2011</div>
+                        <h3>Os Pinguins do Madagascar</h3>
+                        <p>Spin-off da série animada focada exclusivamente nos pinguins.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="curiosities">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Curiosidades Pop</h2>
+            
+            <div class="curiosities-grid">
+                <div class="curiosity-card">
+                    <div class="curiosity-icon">🎬</div>
+                    <h3>130+ Filmes</h3>
+                    <p>Pinguins apareceram em mais de 130 produções cinematográficas</p>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-icon">📺</div>
+                    <h3>Global</h3>
+                    <p>Pingu foi transmitido em mais de 50 países ao redor do mundo</p>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-icon">🎮</div>
+                    <h3>200M+ Usuários</h3>
+                    <p>Club Penguin teve mais de 200 milhões de contas registradas</p>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-icon">🏆</div>
+                    <h3>Oscar</h3>
+                    <p>Happy Feet foi o primeiro filme de animação australiano a ganhar um Oscar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">PENGUIN WORLD</div>
+                    <p>Explorando o fascinante mundo dos pinguins através da ciência, conservação e cultura pop.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Navegação</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#imperador">Espécies</a></li>
+                        <li><a href="cultura-pop.html">Cultura Pop</a></li>
+                        <li><a href="index.html#conservacao">Conservação</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Galeria</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Eventos</a></li>
+                        <li><a href="#">Downloads</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Parcerias</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="#">Termos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2023 Penguin World. Todos os direitos reservados. | Desenvolvido com ❤️ para pinguins
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
