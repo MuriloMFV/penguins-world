@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mundo dos Pinguins — Versão Cinemática</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    /* ----------------------
+       RESET & VARS
+       ---------------------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--accent:#0a2e46;--white:#ffffff;--trans:1s;--max-width:1400px}
+    html,body{height:100%}
+    body{font-family:'Open Sans',sans-serif;color:var(--white);background:var(--accent);overflow-x:hidden}
+
+    /* ----------------------
+       BACKGROUNDS & LAYERS
+       ---------------------- */
+    .bg-image{position:fixed;inset:0;width:100%;height:100%;z-index:-5;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transition:opacity var(--trans) ease,transform 0.6s ease}
+    .bg-image.active{opacity:0.8}
+
+    .dynamic-bg{position:fixed;inset:0;z-index:-4;pointer-events:none;transition:background 400ms linear,opacity 400ms linear;opacity:0.3}
+    .bg-overlay{position:fixed;inset:0;z-index:-3;background:rgba(10,46,70,0.18)}
+
+    /* ----------------------
+       FEATURE (Conservação Cinemática)
+       ---------------------- */
+    .feature{position:fixed;top:0;left:0;width:100%;padding-top:50%;z-index:0;background:url('src/conservacao-bg.jpg') center/250% no-repeat;box-shadow:0 -50px 20px -20px #232323 inset;transition:filter 160ms linear,opacity 160ms linear,background-size 160ms linear}
+    .opaque{position:absolute;inset:0;background:#d2d6f1;opacity:0;pointer-events:none}
+    .content{position:relative;z-index:1;padding-top:45%;width:90%;margin:0 auto;color:#fff}
+
+    /* ----------------------
+       HEADER / HERO / LAYOUT
+       ---------------------- */
+    header{position:fixed;top:0;left:0;width:100%;padding:18px 0;z-index:100;transition:all .4s}
+    header.scrolled{background:rgba(10,46,70,0.9);backdrop-filter:blur(8px);padding:8px 0}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+    .header-content{display:flex;justify-content:space-between;align-items:center}
+    .logo{font-family:'Montserrat',sans-serif;font-weight:700;text-decoration:none;color:var(--white);font-size:20px}
+    .nav-links{display:flex;gap:18px;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--white);font-weight:600}
+
+    .hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
+    .hero h1{font-family:'Montserrat',sans-serif;font-size:3.6rem;text-shadow:2px 2px 12px rgba(0,0,0,.45)}
+    .hero p{max-width:800px;margin:18px auto 28px;line-height:1.6}
+
+    /* ----------------------
+       PENGUIN SECTIONS
+       ---------------------- */
+    .penguin-section{min-height:100vh;display:flex;align-items:center;padding:90px 0;position:relative;overflow:hidden}
+    .section-content{display:flex;gap:30px;align-items:center;width:100%}
+    .penguin-image{flex:1;display:flex;justify-content:center}
+    .penguin-img{max-width:90%;max-height:80vh;object-fit:contain;transition:transform .45s ease,filter .3s}
+
+    /* hover/interaction */
+    .penguin-image:hover .penguin-img{transform:scale(1.02)}
+
+    /* entry + float animation */
+    .penguin-section.visible .penguin-img{animation:slideIn .95s cubic-bezier(.16,.84,.44,1) forwards}
+    .penguin-img{animation:float 4s ease-in-out infinite}
+    @keyframes slideIn{from{transform:translateY(80px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+    /* penguin info card */
+    .penguin-info{flex:1;padding:30px;background:rgba(0,0,0,0.28);backdrop-filter:blur(4px);border-radius:14px}
+    .species-tag{display:inline-block;background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:20px;font-size:.85rem;margin-bottom:12px}
+    .penguin-info h2{font-family:'Montserrat',sans-serif;font-size:2.4rem;margin:8px 0}
+
+    /* indicators */
+    .section-indicator{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column}
+    .indicator-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.36);margin:8px 0;cursor:pointer;position:relative}
+    .indicator-dot.active{background:var(--white);transform:scale(1.25)}
+    .indicator-dot::after{content:attr(data-species);position:absolute;right:22px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.7);padding:6px 10px;border-radius:6px;font-size:12px;white-space:nowrap;opacity:0;transition:opacity .2s}
+    .indicator-dot:hover::after{opacity:1}
+
+    /* footer */
+    footer{background:rgba(0,0,0,0.6);padding:38px 0;text-align:center}
+
+    /* ----------------------
+       SNOW (improved)
+       ---------------------- */
+    .snow-container{position:fixed;inset:0;pointer-events:none;z-index:20}
+    .snowflake{position:absolute;top:-10px;background:rgba(255,255,255,0.9);border-radius:50%;opacity:.9}
+    @keyframes fall{to{transform:translateY(110vh) translateX(30px);opacity:0}}
+
+    /* ----------------------
+       FROST OVERLAY
+       ---------------------- */
+    .frost-overlay{position:fixed;inset:0;z-index:9999;pointer-events:none;background:center/cover no-repeat;opacity:0;animation:frost 3s ease forwards}
+    @keyframes frost{0%{opacity:0}50%{opacity:.45}100%{opacity:0}}
+
+    /* ----------------------
+       RESPONSIVE
+       ---------------------- */
+    @media (max-width:992px){
+      .section-content{flex-direction:column}
+      .penguin-info{padding:24px}
+      .hero h1{font-size:2.6rem}
+      .penguin-info h2{font-size:2rem}
+    }
+  </style>
+</head>
+<body>
+  <!-- imagens de fundo (mantive como no teu projeto original) -->
+  <div class="bg-image active" id="bg-hero" style="background-image:url('https://mariamochileira.com.br/wp-content/uploads/2020/08/7901_photos-gold-harbour_42_-edited.jpg?w=1024')"></div>
+  <div class="bg-image" id="bg-imperador" style="background-image:url('https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/dscn1213.webp?w=1600&h=900')"></div>
+  <div class="bg-image" id="bg-gentoo" style="background-image:url('https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2022/09/hypatia-h_dc434ef46c7f608d5cbe43f2f1c89680-h_0c70909bb47cbfab01377234e2c7ff69.jpg?w=1024')"></div>
+  <div class="bg-image" id="bg-adelia" style="background-image:url('http://www.velle.tur.br/wp-content/uploads/2019/08/Scenic-Eclipse-South-Georgia-Gold-Harbour-RogerPimenta-6.jpg')"></div>
+  <div class="bg-image" id="bg-real" style="background-image:url('https://www.tangol.com/blog/Fotos/Galeria/ushuaia_0_202008190823450.JPG')"></div>
+  <div class="bg-image" id="bg-conservacao" style="background-image:url('https://mariamochileira.com.br/wp-content/uploads/2020/08/2_photos-saunders-island-edited.jpg')"></div>
+
+  <div class="dynamic-bg" id="dynamicBg"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- SNOW container criado dinamicamente pelo JS (mais controle) -->
+
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" href="#">PENGUIN WORLD</a>
+        <ul class="nav-links">
+          <li><a href="#imperador">Imperador</a></li>
+          <li><a href="#gentoo">Gentoo</a></li>
+          <li><a href="#adelia">Adélia</a></li>
+          <li><a href="#real">Real</a></li>
+          <li><a href="#conservacao">Conservação</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>O Mundo Fantástico dos Pinguins</h1>
+          <p>Embarque em uma jornada pelos habitats gelados e descubra a incrível lindeza dessas aves marinhas.</p>
+          <a class="btn" href="#imperador">Explorar Espécies</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÕES DE PINGUINS (conteúdo similar ao teu original) -->
+    <section class="penguin-section" id="imperador" data-bg-start="#0a2e46" data-bg-end="#1a5276" data-bg-image="bg-imperador">
+      <div class="container">
+        <div class="section-content">
+          <div class="penguin-image">
+            <img class="penguin-img" src="src/pinguins/imperador.png" alt="Pinguim Imperador">
+          </div>
+          <div class="penguin-info">
+            <span class="species-tag">Espécie Imperial</span>
+            <h2>Pinguim Imperador</h2>
+            <p>O majestoso pinguim-imperador é a maior de todas as espécies...</p>
+            <div class="habitat-info">
+              <div class="habitat-item"><h4>Habitat</h4><p>Antártida</p></div>
+              <div class="habitat-item"><h4>Altura</h4><p>Até 1,2 metros</p></div>
+              <div class="habitat-item"><h4>Peso</h4><p>Até 45 kg</p></div>
+            </div>
+            <a class="btn btn-outline" href="#">Saber Mais</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="penguin-section" id="gentoo" data-bg-start="#1a5276" data-bg-end="#2874a6" data-bg-image="bg-gentoo">
+      <div class="container">
+        <div class="section-content">
+          <div class="penguin-info">
+            <span class="species-tag">Espécie Ártica</span>
+            <h2>Pinguim Gentoo</h2>
+            <p>Reconhecível por seu bico laranja vibrante...</p>
+            <a class="btn btn-outline" href="#">Saber Mais</a>
+          </div>
+          <div class="penguin-image">
+            <img class="penguin-img" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/eefb0b38-...png" alt="Pinguim Gentoo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="penguin-section" id="adelia" data-bg-start="#2874a6" data-bg-end="#3498db" data-bg-image="bg-adelia">
+      <div class="container">
+        <div class="section-content">
+          <div class="penguin-image">
+            <img class="penguin-img" src="src/pinguins/adelia.png" alt="Pinguim de Adélia">
+          </div>
+          <div class="penguin-info">
+            <span class="species-tag">Espécie Clássica</span>
+            <h2>Pinguim de Adélia</h2>
+            <p>Com seus olhos brancos distintivos e andar desajeitado...</p>
+            <a class="btn btn-outline" href="#">Saber Mais</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="penguin-section" id="real" data-bg-start="#3498db" data-bg-end="#5dade2" data-bg-image="bg-real">
+      <div class="container">
+        <div class="section-content">
+          <div class="penguin-info">
+            <span class="species-tag">Espécie Real</span>
+            <h2>Pinguim-de-Magalhães</h2>
+            <p>Reconhecido pelo característico colar negro duplo...</p>
+            <a class="btn btn-outline" href="#">Saber Mais</a>
+          </div>
+          <div class="penguin-image">
+            <img class="penguin-img" src="https://pngmax.com/...png" alt="pinguim-de-magalhães">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE CONSERVAÇÃO COM O EFEITO CINEMÁTICO -->
+    <section class="penguin-section" id="conservacao" data-bg-start="#5dade2" data-bg-end="#aed6f1" data-bg-image="bg-conservacao">
+      <!-- the cinematic feature sits behind this section -->
+      <div class="feature" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="content">
+          <h2>Protegendo os Pinguins</h2>
+          <p>As mudanças climáticas, a pesca predatória e a poluição representam ameaças significativas para as populações de pinguins em todo o mundo.</p>
+          <p>Role a página e observe o fundo dando zoom-out, ficando mais desfocado e desbotando — é uma representação visual das ameaças ao habitat.</p>
+          <p>Você pode trocar a imagem de fundo em <code>src/conservacao-bg.jpg</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-indicator">
+      <div class="indicator-dot active" data-species="Imperador" data-section="imperador"></div>
+      <div class="indicator-dot" data-species="Gentoo" data-section="gentoo"></div>
+      <div class="indicator-dot" data-species="Adélia" data-section="adelia"></div>
+      <div class="indicator-dot" data-species="Real" data-section="real"></div>
+      <div class="indicator-dot" data-species="Conservação" data-section="conservacao"></div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <a class="logo" href="#">PENGUIN WORLD</a>
+      <p style="opacity:.8;margin-top:12px">&copy; 2023 Penguin World. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ======================================================
+       SCRIPTS INTEGRADOS
+       - snow generator
+       - background switching + parallax
+       - intersection observer for entry animations
+       - frost effect on section change
+       - cinematic "feature" effect in conservação
+       ====================================================== */
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const dynamicBg = document.getElementById('dynamicBg');
+      const bgImages = document.querySelectorAll('.bg-image');
+      const sections = document.querySelectorAll('.penguin-section');
+      const indicatorDots = document.querySelectorAll('.indicator-dot');
+      const header = document.getElementById('header');
+      const feature = document.querySelector('.feature');
+
+      // ---------- SNOW ----------
+      function createSnow(count = 60){
+        const container = document.createElement('div');
+        container.className = 'snow-container';
+        document.body.appendChild(container);
+
+        for(let i=0;i<count;i++){
+          const s = document.createElement('div');
+          s.className = 'snowflake';
+          const size = Math.random()*6 + 2;
+          s.style.width = s.style.height = `${size}px`;
+          s.style.left = `${Math.random()*100}%`;
+          s.style.opacity = (Math.random()*0.6 + 0.25).toFixed(2);
+          const dur = (Math.random()*6 + 4).toFixed(2);
+          s.style.animationDuration = dur + 's';
+          s.style.animationDelay = (Math.random()*-10).toFixed(2) + 's';
+          s.style.transform = `translateX(${(Math.random()*60)-30}px)`;
+          s.style.top = `${Math.random()*-80}%`;
+          s.style.animationName = 'fall';
+          container.appendChild(s);
+        }
+      }
+      createSnow(70);
+
+      // ---------- OBSERVER ENTRY (entrance animations) ----------
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting) e.target.classList.add('visible');
+        });
+      },{threshold:0.22});
+      sections.forEach(s=>io.observe(s));
+
+      // ---------- BACKGROUND SWITCH + INTERPOLATION ----------
+      function hexToRgb(h){
+        const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);
+        return m?{r:parseInt(m[1],16),g:parseInt(m[2],16),b:parseInt(m[3],16)}:null;
+      }
+      function interp(c1,c2,f){
+        const a=hexToRgb(c1),b=hexToRgb(c2);if(!a||!b)return c1;const r=Math.round(a.r+(b.r-a.r)*f),g=Math.round(a.g+(b.g-a.g)*f),bl=Math.round(a.b+(b.b-a.b)*f);return `rgb(${r},${g},${bl})`;}
+
+      function activateBackgroundImage(id){
+        bgImages.forEach(img=>img.id===id?img.classList.add('active'):img.classList.remove('active'));
+      }
+
+      function updateBackground(){
+        const scrollY = window.scrollY;const winH = window.innerHeight;
+        // hero case
+        if(scrollY < sections[0].offsetTop - winH*0.5){
+          activateBackgroundImage('bg-hero');dynamicBg.style.opacity='0.1';return;
+        }
+
+        // find current section
+        let current=null,next=null,progress=0;
+        for(let i=0;i<sections.length;i++){
+          const sec=sections[i];
+          const top = sec.offsetTop - winH*0.3;
+          if(scrollY>=top && scrollY< top+sec.offsetHeight){
+            current=sec;next=sections[i+1]||null;progress=(scrollY-top)/sec.offsetHeight;break;
+          }
+        }
+        if(!current){
+          current = scrollY < sections[0].offsetTop ? sections[0] : sections[sections.length-1];
+          progress = scrollY < sections[0].offsetTop ? 0 : 1;
+        }
+
+        const bgId = current.getAttribute('data-bg-image'); if(bgId) activateBackgroundImage(bgId);
+
+        dynamicBg.style.opacity = (0.3 - progress*0.2).toString();
+        const startColor = current.getAttribute('data-bg-start') || '#0a2e46';
+        const endColor = current.getAttribute('data-bg-end') || '#1a5276';
+        dynamicBg.style.background = interp(startColor,endColor,progress);
+
+        // update indicators
+        updateIndicators(current.id);
+      }
+
+      function updateIndicators(id){
+        indicatorDots.forEach(dot=>dot.getAttribute('data-section')===id?dot.classList.add('active'):dot.classList.remove('active'));
+      }
+
+      // parallax lightweight for bg images
+      function parallax(){
+        const y = window.scrollY;
+        bgImages.forEach(bg=>{bg.style.transform = `translateY(${y*0.08}px)`});
+      }
+
+      // navigation dots click
+      indicatorDots.forEach(dot=>dot.addEventListener('click',function(){
+        const target = document.getElementById(this.getAttribute('data-section'));
+        if(target) window.scrollTo({top: target.offsetTop - 80, behavior:'smooth'});
+      }));
+
+      // header effect
+      function updateHeader(){ if(window.scrollY>100) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
+
+      // frost overlay: called when changing section (small cue)
+      let lastSectionId = '';
+      function showFrost(){ const f = document.createElement('div'); f.className='frost-overlay'; f.style.backgroundImage = "url('src/frost.png')"; document.body.appendChild(f); setTimeout(()=>f.remove(),3000); }
+
+      // initial calls
+      updateBackground(); updateHeader(); parallax();
+
+      // main scroll listener
+      window.addEventListener('scroll', ()=>{
+        updateBackground(); updateHeader(); parallax();
+
+        // cinematic feature effect (applied when scrolling inside conservação)
+        if(feature){
+          const conservTop = document.getElementById('conservacao').offsetTop;
+          const fromTop = window.scrollY - conservTop;
+          if(fromTop > -window.innerHeight && fromTop < window.innerHeight*2){
+            // normalized amount
+            const amt = Math.max(0, Math.min(1, fromTop / (window.innerHeight*0.9)));
+            const baseSize = 250; // percent
+            const newSize = Math.max(110, baseSize - amt*140);
+            feature.style.backgroundSize = newSize + '%';
+            feature.style.filter = `blur(${amt * 6}px)`;
+            feature.style.opacity = String(Math.max(0, 1 - amt*1.2));
+          }
+        }
+
+        // frost cue when section changes
+        const active = Array.from(sections).find(s=> s.getBoundingClientRect().top < window.innerHeight*0.6 && s.getBoundingClientRect().bottom > window.innerHeight*0.25 );
+        if(active && active.id !== lastSectionId){ lastSectionId = active.id; showFrost(); }
+      });
+
+      // small resize handling
+      window.addEventListener('resize', ()=>{ updateBackground(); parallax(); });
+
+    });
+  </script>
+</body>
+</html>
